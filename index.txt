@@ -1,0 +1,11 @@
+Usecase Scenario 3: Data Analytics - Daily Bookings
+
+* need:
+- time period
+- những vehicle type có booking trong khoảng thời gian đó 
+- những booking của từng vehicle type
+- vẽ chart có line: với các điểm là số booking trong ngày.
+
+
+* question:
+1. có xử lí event, tooltip trong chart không?
