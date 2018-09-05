@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <script src="asset/Chart.js-2.7.2/dist/Chart.js"></script>
+    <script src="asset/Chart.js-2.7.2/dist/Chart.min.js"></script>
+</head>
+<body>
+  <canvas id="bar-chart" width="600" height="300"></canvas>
+  <script>
+    // Return with commas in between
+    var numberWithCommas = function(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    // dummy data
+    var bookings = [
+      {
+        id: 1,
+        total_fee: 1000,
+        vehicle_type_name: 'VehicleType1',
+        created_at: 'May 1',
+      },
+      {
+        id: 2,
+        total_fee: 2000,
+        vehicle_type_name: 'VehicleType2',
+        created_at: 'May 2',
+      },
+      {
+        id: 3,
+        total_fee: 1500,
+        vehicle_type_name: 'VehicleType1',
+        created_at: 'May 3',
+      },
+      {
+        id: 4,
+        total_fee: 2500,
+        vehicle_type_name: 'VehicleType2',
+        created_at: 'May 4',
+      },
+      {
+        id: 5,
+        total_fee: 2800,
+        vehicle_type_name: 'VehicleType2',
+        created_at: 'May 5',
+      },
+      {
+        id: 6,
+        total_fee: 5000,
+        vehicle_type_name: 'VehicleType2',
+        created_at: 'May 6',
+      }
+    ]
+    // loop list booking
+    // return value need:
+      // list vehicle type name (label)
+      // count bookings of vehicle type by date range
+      // calculate average bookings of all vehicle type
+    // format date
+    // data
+    // list booking theo vehicle type name
+    var dataPack1 = [21000, 22000, 26000, 35000, 55000, 55000, 56000, 59000, 60000, 61000, 60100, 62000];
+    var dataPack2 = [1000, 1200, 1300, 1400, 1060, 2030, 2070, 4000, 4100, 4020, 4030, 4050];
+    // list average booking by date range
+    var dataPack3 = [1000, 2030, 26000, 60000, 4030, 2030, 2070, 4000, 4100, 4020, 61000, 4050]
+    // date range
+    var dates = ["May 1", "May 2", "May 3", "May 4", "May 5", "May 6", 
+              "May 7", "May 8", "May 9", "May 10", "May 11", "May 12"];
+
+    // Chart.defaults.global.elements.rectangle.backgroundColor = '#FF0000';
+
+    var bar_ctx = document.getElementById('bar-chart');
+    var bar_chart = new Chart(bar_ctx, {
+        type: 'bar',
+        data: {
+            labels: dates,
+            datasets: [
+            {
+                label: 'Vehicle Type 1',
+                data: dataPack1,
+                backgroundColor: "rgba(55, 160, 225, 0.7)",
+                hoverBackgroundColor: "rgba(55, 160, 225, 0.7)",
+                hoverBorderWidth: 2,
+                hoverBorderColor: 'lightgrey',
+            },
+            {
+                label: 'Vehicle Type 2',
+                data: dataPack2,
+                backgroundColor: "rgba(225, 58, 55, 0.7)",
+                hoverBackgroundColor: "rgba(225, 58, 55, 0.7)",
+                hoverBorderWidth: 2,
+                hoverBorderColor: 'lightgrey',
+            },
+            {
+              label: 'Average Bookings',
+              data: dataPack3,
+              fill: false,
+              hoverBorderColor: '#8e5ea2',
+              type: 'line',
+            }
+          ]
+        },
+        options: {
+          animation: {
+            duration: 10,
+          },
+          tooltips: {
+            mode: 'label',
+            callbacks: {
+            label: function(tooltipItem, data) { 
+              return data.datasets[tooltipItem.datasetIndex].label + ": " + numberWithCommas(tooltipItem.yLabel);
+            }
+            }
+          },
+          scales: {
+            xAxes: [{ 
+              stacked: true, 
+              gridLines: { display: false },
+            }],
+            yAxes: [{ 
+              stacked: true, 
+              ticks: {
+                callback: function(value) { return numberWithCommas(value); },
+              }, 
+              scaleLabel: {
+                display: true,
+                labelString: 'Bookings'
+              },
+            }],
+          }, // scales
+          legend: {
+            display: true,
+            position: 'top',
+            labels: {
+              text: 'aaaaaaaaaa',
+              // fontColor: 'rgb(255, 99, 132)',
+            }
+          },
+          title: {
+            display: true,
+            text: ['Daily Booking','6 Average bookings over the period'],
+          },
+        } // options
+      },
+    );
+  </script>
+</body>
+</html>
